@@ -1,19 +1,30 @@
 import "./App.css";
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Register from "./Components/Register";
-import Homepage from "./Components/Homepage";
-import Login from "./Components/Login";
+import Register from "./Components/StartPage/Register";
+import Homepage from "./Components/QuestionPage/Homepage";
+import Login from "./Components/StartPage/Login";
+import ProtectedRoutes from "./Service/ProtectedRoutes";
+import Admin from "./Components/QuestionPage/Admin";
+import User from "./Components/QuestionPage/User";
 
 function App() {
+  const data = JSON.parse(localStorage.getItem("data"));
+  let role;
+  if (data) {
+    role = data.user.role;
+  }
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={<Homepage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/add" element={<AddTodo />} />
-        <Route path="/edit/:id" element={<EditTodo />} /> */}
+        <Route element={<ProtectedRoutes role={role} />}>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/user" element={<User />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

@@ -3,7 +3,10 @@ import { Form, Input, Button, Row } from "antd";
 import "antd/dist/antd.css";
 import { useNavigate } from "react-router-dom";
 import { UserOutlined, LockOutlined, GoogleOutlined } from "@ant-design/icons";
-import authService from "../Service/authService";
+import authService from "../../Service/authService";
+import { Typography } from "antd";
+
+const { Title } = Typography;
 
 function Register(params) {
   const [form] = Form.useForm();
@@ -16,12 +19,8 @@ function Register(params) {
   const onFinish = async (user) => {
     // console.log("Success !", values);
     try {
-      const response = await authService.register(
-        user.username,
-        user.password,
-        user.email
-      );
-      console.log(response);
+      await authService.register(user.username, user.password, user.email);
+      //   console.log(response);
       nav("/login");
     } catch (error) {
       console.log(error);
@@ -36,7 +35,7 @@ function Register(params) {
       style={{ minHeight: "100vh" }}
     >
       <Form form={form} name="horizontal_login" onFinish={onFinish}>
-        <h1> Register Form</h1>
+        <Title> Register Form</Title>
         <Form.Item
           name="username"
           rules={[
