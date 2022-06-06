@@ -35,7 +35,7 @@ function Login(params) {
   const checkRole = (role) => {
     if (role === "user") {
       console.log("oh user");
-      nav("/user");
+      nav("/quizsetting");
     } else if (role === "admin") {
       nav("/admin");
     }

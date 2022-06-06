@@ -1,10 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import quesService from "../../Service/questionService";
 
-function User() {
-  useEffect(() => {
-    fetchData();
-  }, []);
+function ListQuestion() {
   const fetchData = async () => {
     try {
       const response = await quesService.getQuestionUser(5);
@@ -13,6 +10,7 @@ function User() {
       console.log(error);
     }
   };
+  fetchData();
   return <h1>User</h1>;
 }
-export default User;
+export default ListQuestion;

@@ -3,7 +3,7 @@ import { Navigate, Outlet } from "react-router-dom";
 
 export const ProtectedRoute = ({ role }) => {
   if (role === "user") {
-    return <Navigate to="/user" />;
+    return <Navigate to="/quizsetting" />;
   }
   if (role === "admin") {
     return <Navigate to="/admin" />;
@@ -13,14 +13,14 @@ export const ProtectedRoute = ({ role }) => {
 
 export const UserRoute = ({ role }) => {
   if (role !== "user") {
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
   return <Outlet />;
 };
 
 export const AdminRoute = ({ role }) => {
   if (role !== "admin") {
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
   return <Outlet />;
 };
