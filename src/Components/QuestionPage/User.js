@@ -7,7 +7,7 @@ function User() {
   }, []);
   const fetchData = async () => {
     try {
-      const response = await quesService.getQuestionUser();
+      const response = await quesService.getQuestionUser(5);
       console.log(response);
     } catch (error) {
       console.log(error);

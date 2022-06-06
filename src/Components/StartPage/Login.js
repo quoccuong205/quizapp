@@ -22,7 +22,8 @@ function Login(params) {
     try {
       const response = await authService.login(user.username, user.password);
       const role = response.data.user.role;
-      localStorage.setItem("data", JSON.stringify(response.data));
+      const encodeData = btoa(JSON.stringify(response.data));
+      localStorage.setItem("data", encodeData);
       console.log(role);
       //   console.log(JSON.stringify(response.data));
       checkRole(role);

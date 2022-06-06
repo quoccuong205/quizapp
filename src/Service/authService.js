@@ -12,7 +12,6 @@ const authApi = axios.create({
   baseURL: AUTH_API,
   headers: {
     contentType: "application/json",
-    // Authorization: userToken,
   },
 });
 

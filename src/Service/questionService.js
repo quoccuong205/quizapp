@@ -1,7 +1,8 @@
 import axios from "axios";
+import { isAuthen } from "../utils/isAuthen";
 
 const QUESTION_API = "https://fwa-ec-quiz-mock1.herokuapp.com/v1/questions/";
-const data = JSON.parse(localStorage.getItem("data"));
+const data = isAuthen();
 
 let userToken;
 if (data && data.tokens) {
@@ -16,8 +17,12 @@ const quesApi = axios.create({
   },
 });
 
-const getQuestionUser = () => {
-  return quesApi.get("/");
+const getQuestionUser = (limit) => {
+  return quesApi.get("/", {
+    params: {
+      limit: limit,
+    },
+  });
 };
 
 const submitAnswer = (id, correctAnswer) => {

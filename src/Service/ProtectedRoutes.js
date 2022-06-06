@@ -1,9 +1,26 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { isAuthen } from "../utils/isAuthen";
 
-const ProtectedRoutes = () => {
-  return isAuthen() ? <Outlet /> : <Navigate to="/login" />;
+export const ProtectedRoute = ({ role }) => {
+  if (role === "user") {
+    return <Navigate to="/user" />;
+  }
+  if (role === "admin") {
+    return <Navigate to="/admin" />;
+  }
+  return <Outlet />;
 };
 
-export default ProtectedRoutes;
+export const UserRoute = ({ role }) => {
+  if (role !== "user") {
+    return <Navigate to="/" />;
+  }
+  return <Outlet />;
+};
+
+export const AdminRoute = ({ role }) => {
+  if (role !== "admin") {
+    return <Navigate to="/" />;
+  }
+  return <Outlet />;
+};
