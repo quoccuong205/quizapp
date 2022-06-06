@@ -9,9 +9,10 @@ import { Typography } from "antd";
 const { Title } = Typography;
 
 function Login(params) {
-  const [form] = Form.useForm();
   const nav = useNavigate();
+  const [form] = Form.useForm();
   const [, forceUpdate] = useState({});
+
   useEffect(() => {
     forceUpdate({});
   }, []);
@@ -24,14 +25,18 @@ function Login(params) {
       localStorage.setItem("data", JSON.stringify(response.data));
       console.log(role);
       //   console.log(JSON.stringify(response.data));
-      if (role === "user") {
-        console.log("oh user");
-        nav("/user");
-      } else if (role === "admin") {
-        nav("/admin");
-      }
+      checkRole(role);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const checkRole = (role) => {
+    if (role === "user") {
+      console.log("oh user");
+      nav("/user");
+    } else if (role === "admin") {
+      nav("/admin");
     }
   };
 

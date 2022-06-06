@@ -9,18 +9,12 @@ import Admin from "./Components/QuestionPage/Admin";
 import User from "./Components/QuestionPage/User";
 
 function App() {
-  const data = JSON.parse(localStorage.getItem("data"));
-  let role;
-  if (data) {
-    role = data.user.role;
-  }
-
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route element={<ProtectedRoutes role={role} />}>
+        <Route element={<ProtectedRoutes />}>
           <Route path="/" element={<Homepage />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/user" element={<User />} />
