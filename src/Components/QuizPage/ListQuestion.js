@@ -4,6 +4,9 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getQuestion } from "../../redux/question/action";
 import "antd/dist/antd.css";
+import { submitQuestion } from "../../redux/answer/action";
+import { useNavigate } from "react-router-dom";
+import { saveQuestionSuccess } from "../../redux/answer/reducer";
 
 function ListQuestion() {
   const { Title } = Typography;
@@ -11,10 +14,11 @@ function ListQuestion() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [options, setOption] = useState([]);
   const [answer, setAnswer] = useState("");
+  const nav = useNavigate();
+  const allAnswer = useSelector((state) => state.answer.answer);
   const accessToken = useSelector(
     (state) => state.auth.auth.tokens.access.token
   );
-  let allAnswer = [];
   const numberOfQuestion = useSelector(
     (state) => state.question.numberOfQuestion
   );
@@ -23,6 +27,7 @@ function ListQuestion() {
   useEffect(() => {
     dispatch(getQuestion(accessToken, numberOfQuestion));
   }, [accessToken]);
+  const questionId = question?.id;
 
   useEffect(() => {
     if (listQuestion?.length) {
@@ -35,20 +40,26 @@ function ListQuestion() {
       setOption(answers);
     }
   }, [question, listQuestion]);
+
   const handleBack = () => {
     setCurrentIndex(currentIndex - 1);
   };
-  const handleNextAndSubmit = () => {
-    // try {
-    //   if (answers!==''){
-    //     if (allAnswer.map((item, index)=> item[index].id === currentIndex)){
-    //     }
-    //   }
-    // } catch (error) {
-    // }
-  };
-  const handleClick = (option) => {
+
+  const handleAnswer = (option) => {
     setAnswer(option);
+  };
+  const handleNextAndSubmit = () => {
+    if (answer === "") {
+      console.log("Please answer all question");
+    } else {
+      dispatch(saveQuestionSuccess({ id: questionId, correctanswer: answer }));
+      setAnswer("");
+      if (currentIndex + 1 < listQuestion.length) {
+        setCurrentIndex((currentIndex) => currentIndex + 1);
+      } else {
+        dispatch(submitQuestion(accessToken, allAnswer, nav));
+      }
+    }
   };
   return (
     <div className="container">
@@ -74,7 +85,7 @@ function ListQuestion() {
             shape="round"
             style={{ margin: "15px" }}
             key={index}
-            onClick={handleClick}
+            onClick={() => handleAnswer(option)}
           >
             {option}
           </Button>

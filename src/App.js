@@ -13,6 +13,7 @@ import Admin from "./Components/AdminPage/Admin";
 import QuestionSetting from "./Components/QuizPage/QuestionSetting";
 import ListQuestion from "./Components/QuizPage/ListQuestion";
 import { useSelector } from "react-redux";
+import ResultPage from "./Components/QuizPage/ResultPage";
 
 function App() {
   // const data = useSelector((state) => state.auth);
@@ -29,6 +30,7 @@ function App() {
         <Route element={<UserRoute role={role} />}>
           <Route path="/quizsetting" element={<QuestionSetting />} />
           <Route path="/listquiz" element={<ListQuestion />} />
+          <Route path="/resultquiz" element={<ResultPage />} />
         </Route>
         <Route element={<AdminRoute role={role} />}>
           <Route path="/admin" element={<Admin />} />

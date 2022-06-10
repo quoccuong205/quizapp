@@ -1,6 +1,7 @@
 import authReducer from "./auth/reducer";
 import questionReducer from "./question/reducer";
 import adminReducer from "./admin/reducer";
+import answerReducer from "./answer/reducer";
 import {
   persistStore,
   persistReducer,
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   question: questionReducer,
   admin: adminReducer,
+  answer: answerReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

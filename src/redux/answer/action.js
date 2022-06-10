@@ -1,15 +1,22 @@
 import "antd/dist/antd.css";
 import axios from "../../api/axios";
 import { Modal } from "antd";
-import { submitQuestionSuccess } from "./reducer";
+import { getScoreSuccess } from "../auth/reducer";
 
 export const submitQuestion =
-  (accessToken, questionAnswer) => async (dispatch) => {
+  (accessToken, questionAnswer, nav) => async (dispatch) => {
     try {
-      const { data } = await axios.get("/v1/questions/submit", questionAnswer, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
-      dispatch(submitQuestionSuccess(data));
+      const { data } = await axios.post(
+        "/v1/questions/submit",
+        [...questionAnswer],
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
+      console.log(questionAnswer);
+      console.log(data);
+      dispatch(getScoreSuccess(data));
+      nav("/resultquiz");
     } catch (error) {
       Modal.error({
         title: "Submit question failed",

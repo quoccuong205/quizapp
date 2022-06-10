@@ -9,8 +9,12 @@ const authSlice = createSlice({
     loginSuccess: (state, action) => {
       state.auth = action.payload;
     },
+    getScoreSuccess: (state, action) => {
+      const sum = action.payload.filter((item) => item.result === true);
+      state.auth.user.score = sum.length;
+    },
   },
 });
 
-export const { loginSuccess } = authSlice.actions;
+export const { loginSuccess, getScoreSuccess } = authSlice.actions;
 export default authSlice.reducer;

@@ -10,8 +10,8 @@ import { getListQuestion, updateQuestion } from "../../redux/admin/action";
 
 function Admin() {
   const { Content, Sider } = Layout;
-  const items3 = ["Question", "User"];
-  const items2 = [UserOutlined, ReadOutlined].map((icon, index) => {
+  const items3 = ["Question"];
+  const items2 = [UserOutlined].map((icon, index) => {
     const key = String(index + 1);
     return {
       key: `${key}`,
@@ -111,12 +111,10 @@ function Admin() {
       }
 
       let questionUpdate = { ...newData[index] };
-      // console.log(questionUpdate);
+
       delete questionUpdate.key;
 
       let questionId = newData[index].key;
-      // console.log(questionId);
-      // console.log(accessToken);
       dispatch(updateQuestion(accessToken, questionUpdate, questionId));
     } catch (errInfo) {
       console.log("Validate Failed:", errInfo);
