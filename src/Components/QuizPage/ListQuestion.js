@@ -24,9 +24,10 @@ function ListQuestion() {
   );
   const listQuestion = useSelector((state) => state.question.question);
   const question = listQuestion[currentIndex];
+
   useEffect(() => {
     dispatch(getQuestion(accessToken, numberOfQuestion));
-  }, [accessToken]);
+  }, [accessToken, dispatch, numberOfQuestion]);
   const questionId = question?.id;
 
   useEffect(() => {
@@ -52,11 +53,13 @@ function ListQuestion() {
     if (answer === "") {
       console.log("Please answer all question");
     } else {
+      console.log(answer);
       dispatch(saveQuestionSuccess({ id: questionId, correctanswer: answer }));
       setAnswer("");
       if (currentIndex + 1 < listQuestion.length) {
         setCurrentIndex((currentIndex) => currentIndex + 1);
       } else {
+        console.log(allAnswer);
         dispatch(submitQuestion(accessToken, allAnswer, nav));
       }
     }

@@ -13,8 +13,6 @@ export const submitQuestion =
           headers: { Authorization: `Bearer ${accessToken}` },
         }
       );
-      console.log(questionAnswer);
-      console.log(data);
       dispatch(getScoreSuccess(data));
       nav("/resultquiz");
     } catch (error) {
