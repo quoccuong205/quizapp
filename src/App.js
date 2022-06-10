@@ -10,16 +10,14 @@ import {
   ProtectedRoute,
 } from "./Service/ProtectedRoutes";
 import Admin from "./Components/AdminPage/Admin";
-import { isAuthen } from "./utils/isAuthen";
 import QuestionSetting from "./Components/QuizPage/QuestionSetting";
 import ListQuestion from "./Components/QuizPage/ListQuestion";
+import { useSelector } from "react-redux";
 
 function App() {
-  let role;
-  const data = isAuthen();
-  if (data) {
-    role = data.user.role;
-  }
+  // const data = useSelector((state) => state.auth);
+  // console.log(data);
+  const role = useSelector((state) => state.auth?.auth?.user?.role);
   return (
     <BrowserRouter>
       <Routes>

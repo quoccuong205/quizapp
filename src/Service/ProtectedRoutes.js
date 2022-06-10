@@ -13,14 +13,14 @@ export const ProtectedRoute = ({ role }) => {
 
 export const UserRoute = ({ role }) => {
   if (role !== "user") {
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
   return <Outlet />;
 };
 
 export const AdminRoute = ({ role }) => {
   if (role !== "admin") {
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
   return <Outlet />;
 };

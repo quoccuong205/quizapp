@@ -3,14 +3,16 @@ import { Form, Input, Button, Row } from "antd";
 import "antd/dist/antd.css";
 import { useNavigate } from "react-router-dom";
 import { UserOutlined, LockOutlined, GoogleOutlined } from "@ant-design/icons";
-import authService from "../../Service/authService";
 import { Typography } from "antd";
+import { useDispatch } from "react-redux";
+import { register } from "../../redux/auth/action";
 
 const { Title } = Typography;
 
 function Register(params) {
   const [form] = Form.useForm();
   const nav = useNavigate();
+  const dispatch = useDispatch();
   const [, forceUpdate] = useState({});
   useEffect(() => {
     forceUpdate({});
@@ -19,9 +21,8 @@ function Register(params) {
   const onFinish = async (user) => {
     // console.log("Success !", values);
     try {
-      await authService.register(user.username, user.password, user.email);
+      dispatch(register(user, nav));
       //   console.log(response);
-      nav("/login");
     } catch (error) {
       console.log(error);
     }

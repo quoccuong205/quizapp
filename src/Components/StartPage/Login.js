@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Form, Input, Button, Row } from "antd";
 import "antd/dist/antd.css";
-import { useNavigate } from "react-router-dom";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import authService from "../../Service/authService";
 import { Typography } from "antd";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/auth/action";
+import { useNavigate } from "react-router-dom";
 
 const { Title } = Typography;
 
@@ -12,6 +13,7 @@ function Login(params) {
   const nav = useNavigate();
   const [form] = Form.useForm();
   const [, forceUpdate] = useState({});
+  const dispatch = useDispatch();
 
   useEffect(() => {
     forceUpdate({});
@@ -20,24 +22,9 @@ function Login(params) {
   const onFinish = async (user) => {
     // console.log("Success !", values);
     try {
-      const response = await authService.login(user.username, user.password);
-      const role = response.data.user.role;
-      const encodeData = btoa(JSON.stringify(response.data));
-      localStorage.setItem("data", encodeData);
-      console.log(role);
-      //   console.log(JSON.stringify(response.data));
-      checkRole(role);
+      dispatch(login(user));
     } catch (error) {
       console.log(error);
-    }
-  };
-
-  const checkRole = (role) => {
-    if (role === "user") {
-      console.log("oh user");
-      nav("/quizsetting");
-    } else if (role === "admin") {
-      nav("/admin");
     }
   };
 
