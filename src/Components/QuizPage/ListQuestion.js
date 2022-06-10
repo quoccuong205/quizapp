@@ -1,5 +1,5 @@
 import { Button } from "antd";
-import { Typography, Col } from "antd";
+import { Typography, Col, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getQuestion } from "../../redux/question/action";
@@ -10,9 +10,11 @@ function ListQuestion() {
   const dispatch = useDispatch();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [options, setOption] = useState([]);
+  const [answer, setAnswer] = useState("");
   const accessToken = useSelector(
     (state) => state.auth.auth.tokens.access.token
   );
+  let allAnswer = [];
   const numberOfQuestion = useSelector(
     (state) => state.question.numberOfQuestion
   );
@@ -33,57 +35,75 @@ function ListQuestion() {
       setOption(answers);
     }
   }, [question, listQuestion]);
-  const handleNext = () => {
-    setCurrentIndex(currentIndex + 1);
+  const handleBack = () => {
+    setCurrentIndex(currentIndex - 1);
   };
-  const handleClick = () => {
-    console.log("hihi");
+  const handleNextAndSubmit = () => {
+    // try {
+    //   if (answers!==''){
+    //     if (allAnswer.map((item, index)=> item[index].id === currentIndex)){
+    //     }
+    //   }
+    // } catch (error) {
+    // }
+  };
+  const handleClick = (option) => {
+    setAnswer(option);
   };
   return (
     <div className="container">
       <div className="container__question">
-        <Title justify="center" align="middle">
+        <Title justify="center" align="middle" style={{ marginLeft: "50px" }}>
           {" "}
           Question {currentIndex + 1}/ {listQuestion.length}{" "}
         </Title>
-        <Title justify="center" align="middle" level={3}>
+        <Title
+          justify="center"
+          align="middle"
+          level={3}
+          style={{ marginLeft: "50px" }}
+        >
           {question?.question}
         </Title>
       </div>
       <Col md={{ span: 12, offset: 6 }}>
-        <div className="container__answer">
-          {options.map((option, index) => (
-            <Button
-              block
-              size="large"
-              shape="round"
-              type="flex"
-              justify="center"
-              align="middle"
-              margin="50px"
-              style={{ margin: "15px" }}
-              key={index}
-              onClick={handleClick}
-            >
-              {option}
-            </Button>
-          ))}
+        {options.map((option, index) => (
           <Button
             block
             size="large"
             shape="round"
-            type="flex"
-            justify="center"
-            align="middle"
-            margin="50px"
-            style={{ margin: "20px" }}
-            md={{ span: 12, offset: 6 }}
-            disabled={currentIndex + 1 < listQuestion.length ? false : true}
-            onClick={handleNext}
+            style={{ margin: "15px" }}
+            key={index}
+            onClick={handleClick}
           >
-            Next
+            {option}
           </Button>
-        </div>
+        ))}
+
+        <Row
+          type="flex"
+          justify="center"
+          align="middle"
+          md={{ span: 12, offset: 6 }}
+        >
+          <Button
+            shape="round"
+            style={{ margin: "20px" }}
+            disabled={currentIndex < 1 ? true : false}
+            onClick={handleBack}
+            style={{ marginLeft: "50px" }}
+          >
+            Back
+          </Button>
+          <Button
+            shape="round"
+            type="flex"
+            style={{ margin: "20px" }}
+            onClick={handleNextAndSubmit}
+          >
+            {currentIndex + 1 < listQuestion.length ? "Next" : "Submit"}
+          </Button>
+        </Row>
       </Col>
     </div>
   );
