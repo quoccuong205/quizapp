@@ -11,15 +11,15 @@ export const ProtectedRoute = ({ role }) => {
   return <Outlet />;
 };
 
-export const UserRoute = ({ role }) => {
-  if (role !== "user") {
+export const UserRoute = ({ role, accessToken }) => {
+  if (!accessToken || (accessToken && role === "admin")) {
     return <Navigate to="/" />;
   }
   return <Outlet />;
 };
 
-export const AdminRoute = ({ role }) => {
-  if (role !== "admin") {
+export const AdminRoute = ({ role, accessToken }) => {
+  if (!accessToken || (accessToken && role === "user")) {
     return <Navigate to="/" />;
   }
   return <Outlet />;

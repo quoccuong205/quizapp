@@ -4,6 +4,7 @@ const adminSlice = createSlice({
   name: "admin",
   initialState: {
     listQuestion: [],
+    listUser: [],
   },
   reducers: {
     getQuestionAdminSuccess: (state, action) => {
@@ -19,6 +20,16 @@ const adminSlice = createSlice({
     deleteQuestionSuccess: (state, action) => {
       state.listQuestion.filter((item) => item.id !== action.id);
     },
+    getUsersSuccess: (state, action) => {
+      state.listUser = action.payload.results;
+    },
+    updateUserSuccess: (state, action) => {
+      state.listUser.results.map((item) => {
+        if (item.id === action.payload.id) {
+          item = action.payload;
+        }
+      });
+    },
   },
 });
 
@@ -26,5 +37,7 @@ export const {
   getQuestionAdminSuccess,
   updateQuestionSuccess,
   deleteQuestionSuccess,
+  getUsersSuccess,
+  updateUserSuccess,
 } = adminSlice.actions;
 export default adminSlice.reducer;

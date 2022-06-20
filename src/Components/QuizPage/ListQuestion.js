@@ -7,6 +7,7 @@ import "antd/dist/antd.css";
 import { submitQuestion } from "../../redux/answer/action";
 import { useNavigate } from "react-router-dom";
 import { saveQuestionSuccess } from "../../redux/answer/reducer";
+import Navbar from "../StartPage/Navbar";
 
 function ListQuestion() {
   const { Title } = Typography;
@@ -59,66 +60,68 @@ function ListQuestion() {
       if (currentIndex + 1 < listQuestion.length) {
         setCurrentIndex((currentIndex) => currentIndex + 1);
       } else {
-        console.log(allAnswer);
         dispatch(submitQuestion(accessToken, allAnswer, nav));
       }
     }
   };
   return (
-    <div className="container">
-      <div className="container__question">
-        <Title justify="center" align="middle" style={{ marginLeft: "50px" }}>
-          {" "}
-          Question {currentIndex + 1}/ {listQuestion.length}{" "}
-        </Title>
-        <Title
-          justify="center"
-          align="middle"
-          level={3}
-          style={{ marginLeft: "50px" }}
-        >
-          {question?.question}
-        </Title>
-      </div>
-      <Col md={{ span: 12, offset: 6 }}>
-        {options.map((option, index) => (
-          <Button
-            block
-            size="large"
-            shape="round"
-            style={{ margin: "15px" }}
-            key={index}
-            onClick={() => handleAnswer(option)}
-          >
-            {option}
-          </Button>
-        ))}
-
-        <Row
-          type="flex"
-          justify="center"
-          align="middle"
-          md={{ span: 12, offset: 6 }}
-        >
-          <Button
-            shape="round"
-            style={{ margin: "20px" }}
-            disabled={currentIndex < 1 ? true : false}
-            onClick={handleBack}
+    <div>
+      <Navbar />
+      <div className="container">
+        <div className="container__question">
+          <Title justify="center" align="middle" style={{ marginLeft: "50px" }}>
+            {" "}
+            Question {currentIndex + 1}/ {listQuestion.length}{" "}
+          </Title>
+          <Title
+            justify="center"
+            align="middle"
+            level={3}
             style={{ marginLeft: "50px" }}
           >
-            Back
-          </Button>
-          <Button
-            shape="round"
+            {question?.question}
+          </Title>
+        </div>
+        <Col md={{ span: 12, offset: 6 }}>
+          {options.map((option, index) => (
+            <Button
+              block
+              size="large"
+              shape="round"
+              style={{ margin: "15px" }}
+              key={index}
+              onClick={() => handleAnswer(option)}
+            >
+              {option}
+            </Button>
+          ))}
+
+          <Row
             type="flex"
-            style={{ margin: "20px" }}
-            onClick={handleNextAndSubmit}
+            justify="center"
+            align="middle"
+            md={{ span: 12, offset: 6 }}
           >
-            {currentIndex + 1 < listQuestion.length ? "Next" : "Submit"}
-          </Button>
-        </Row>
-      </Col>
+            <Button
+              shape="round"
+              style={{ margin: "20px" }}
+              disabled={currentIndex < 1 ? true : false}
+              onClick={handleBack}
+              style={{ marginLeft: "50px" }}
+            >
+              Back
+            </Button>
+            <Button
+              shape="round"
+              type="flex"
+              style={{ margin: "20px" }}
+              onClick={handleNextAndSubmit}
+            >
+              {currentIndex + 1 < listQuestion.length ? "Next" : "Submit"}
+            </Button>
+          </Row>
+        </Col>
+      </div>
     </div>
   );
 }

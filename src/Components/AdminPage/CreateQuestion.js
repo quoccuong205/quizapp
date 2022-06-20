@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Form, Input, Button, Row } from "antd";
 import "antd/dist/antd.css";
 import { useNavigate } from "react-router-dom";
-import { UserOutlined, LockOutlined, GoogleOutlined } from "@ant-design/icons";
 import { Typography } from "antd";
 import { useDispatch } from "react-redux";
-import { register } from "../../redux/auth/action";
+import { createQuestion } from "../../redux/admin/action";
+import { useSelector } from "react-redux";
 
 const { Title } = Typography;
 
-function Register(params) {
+function CreateQuestion(params) {
   const [form] = Form.useForm();
   const nav = useNavigate();
   const dispatch = useDispatch();
@@ -17,11 +17,14 @@ function Register(params) {
   useEffect(() => {
     forceUpdate({});
   }, []);
+  const accessToken = useSelector(
+    (state) => state.auth.auth.tokens.access.token
+  );
 
   const onFinish = async (user) => {
     // console.log("Success !", values);
     try {
-      dispatch(register(user, nav));
+      dispatch(createQuestion(user, accessToken, form));
       //   console.log(response);
     } catch (error) {
       console.log(error);
@@ -29,12 +32,7 @@ function Register(params) {
   };
 
   return (
-    <Row
-      type="flex"
-      justify="center"
-      align="middle"
-      style={{ minHeight: "100vh" }}
-    >
+    <Row type="flex" justify="center" align="middle">
       <Form
         style={{ width: "400px" }}
         form={form}
@@ -43,51 +41,73 @@ function Register(params) {
       >
         <Title justify="center" align="middle">
           {" "}
-          Register Form
+          Create Question
         </Title>
         <Form.Item
-          name="username"
+          name="question"
           rules={[
             {
               required: true,
-              message: "Please input your username!",
+              message: "Please input your question!",
             },
           ]}
         >
-          <Input
-            prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder="Username"
-          />
+          <Input placeholder="Question" />
         </Form.Item>
         <Form.Item
-          name="password"
+          name="answer1"
           rules={[
             {
               required: true,
-              message: "Please input your password!",
+              message: "Please input your answer1!",
             },
           ]}
         >
-          <Input
-            prefix={<LockOutlined className="site-form-item-icon" />}
-            type="password"
-            placeholder="Password"
-          />
+          <Input placeholder="Answer 1" />
         </Form.Item>
         <Form.Item
-          name="email"
+          name="answer2"
           rules={[
             {
               required: true,
-              message: "Please input your email!",
+              message: "Please input your answer2!",
             },
           ]}
         >
-          <Input
-            prefix={<GoogleOutlined className="site-form-item-icon" />}
-            type="email"
-            placeholder="Email"
-          />
+          <Input placeholder="Answer 2" />
+        </Form.Item>
+        <Form.Item
+          name="answer3"
+          rules={[
+            {
+              required: true,
+              message: "Please input your answer3!",
+            },
+          ]}
+        >
+          <Input placeholder="Answer 3" />
+        </Form.Item>
+        <Form.Item
+          name="answer4"
+          rules={[
+            {
+              required: true,
+              message: "Please input your answer4!",
+            },
+          ]}
+        >
+          <Input placeholder="Answer 4" />
+        </Form.Item>
+        <Form.Item
+          name="correctanswer"
+          rules={[
+            {
+              required: true,
+              message: "Please input your correct answer!",
+            },
+          ]}
+        >
+          <Input placeholder="Correct answer" />
         </Form.Item>
         <Form.Item shouldUpdate>
           {() => (
@@ -101,15 +121,12 @@ function Register(params) {
                   .length
               }
             >
-              Register
+              Create
             </Button>
           )}
-        </Form.Item>
-        <Form.Item>
-          Or <a href="/">Login now!</a>
         </Form.Item>
       </Form>
     </Row>
   );
 }
-export default Register;
+export default CreateQuestion;
